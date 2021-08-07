@@ -11,20 +11,23 @@ class ViewController: UIViewController {
 
     @IBOutlet private weak var resultLabel: UILabel!
     @IBOutlet private weak var slider: UISlider!
-    
+
+    private var correctAnswer = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         slider.value = slider.maximumValue / 2
 
-        resultLabel.text = String(Int.random(in: 1...100))
+        correctAnswer = makeCorrectAnswer()
+        resultLabel.text = String(correctAnswer)
     }
 
     @IBAction private func resultButton(_ sender: UIButton) {
         
         let sliderValue = Int(slider.value)
         
-        if sliderValue == Int(resultLabel.text!) {
+        if sliderValue == correctAnswer {
             let message = "あたり！\nあなたの値：\(sliderValue)"
             displayAlert(message)
         } else {
@@ -34,7 +37,8 @@ class ViewController: UIViewController {
 
         slider.value = slider.maximumValue / 2
 
-        resultLabel.text = String(Int.random(in: 1...100))
+        correctAnswer = makeCorrectAnswer()
+        resultLabel.text = String(correctAnswer)
     }
     
     //アラート表示用関数
@@ -50,6 +54,8 @@ class ViewController: UIViewController {
           //アラートの表示
           present(alert, animated: true, completion: nil)
       }
-    
-}
 
+    private func makeCorrectAnswer() -> Int {
+        Int.random(in: 1...100)
+    }
+}
